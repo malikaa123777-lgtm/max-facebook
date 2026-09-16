@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ماكس | تحكم صفحات فيسبوك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="shell">
+
+  <!-- ===== الشريط الجانبي: الصفحات ===== -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <span class="brand-mark">م</span>
+      <div class="brand-text">
+        <strong>ماكس</strong>
+        <small>Cyber Brain — وحدة فيسبوك</small>
+      </div>
+    </div>
+
+    <div class="rail-section">
+      <div class="rail-section-head">
+        <span>الصفحات المتصلة</span>
+        <button id="btn-add-page" class="icon-btn" title="إضافة صفحة">+</button>
+      </div>
+      <ul id="page-list" class="page-list"><!-- تُبنى ديناميكياً --></ul>
+    </div>
+
+    <div class="rail-section">
+      <div class="rail-section-head"><span>الحالة</span></div>
+      <div id="status-box" class="status-box">
+        <div class="status-row"><span class="dot dot-off" id="dot-gemini"></span> مفتاح Gemini</div>
+        <div class="status-row"><span class="dot dot-off" id="dot-pages"></span> صفحات متصلة</div>
+      </div>
+    </div>
+
+    <button id="btn-settings" class="rail-footer-btn">⚙ الإعدادات</button>
+  </aside>
+
+  <!-- ===== المنطقة الرئيسية: المحادثة ===== -->
+  <main class="stage">
+    <header class="stage-head">
+      <div>
+        <h1>غرفة التحكم</h1>
+        <p class="context-line">
+          السياق الحالي:
+          <select id="active-page-select"><option value="">— اختر صفحة —</option></select>
+        </p>
+      </div>
+      <div class="quick-stats" id="quick-stats">
+        <div class="stat"><span id="stat-comments">—</span><label>تعليقات جديدة</label></div>
+        <div class="stat"><span id="stat-engagement">—</span><label>تفاعل (7 أيام)</label></div>
+      </div>
+    </header>
+
+    <div id="chat-log" class="chat-log">
+      <div class="msg msg-max">
+        <div class="msg-avatar">م</div>
+        <div class="msg-body">
+          أهلاً، أنا ماكس. وصلني صفحاتك من الإعدادات وبقدر أرد على التعليقات، أنشر محتوى،
+          أحل مشاكل زي التعليقات المسيئة، وأحللك أداء الصفحة. ما بحكي ولا برد أبداً على الرسائل الخاصة.
+        </div>
+      </div>
+    </div>
+
+    <form id="composer" class="composer">
+      <input id="composer-input" type="text" placeholder="اكتب أمرك لماكس... مثال: رد على آخر ٣ تعليقات بصفحة المتجر" autocomplete="off" />
+      <button type="submit" id="composer-send">إرسال</button>
+    </form>
+  </main>
+</div>
+
+<!-- ===== نافذة الإعدادات ===== -->
+<div id="modal-settings" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>الإعدادات</h2>
+      <button class="icon-btn" id="close-settings">✕</button>
+    </div>
+    <label class="field">
+      <span>مفتاح Gemini API</span>
+      <input id="input-gemini-key" type="password" placeholder="AIza..." />
+    </label>
+    <button id="save-settings" class="primary-btn">حفظ</button>
+    <p class="hint">المفتاح يُخزَّن محلياً بمتصفحك فقط ولا يُرسل لأي مكان غير Google.</p>
+  </div>
+</div>
+
+<!-- ===== نافذة إضافة صفحة ===== -->
+<div id="modal-page" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2>إضافة صفحة فيسبوك</h2>
+      <button class="icon-btn" id="close-page-modal">✕</button>
+    </div>
+    <label class="field">
+      <span>اسم الصفحة (للعرض فقط)</span>
+      <input id="input-page-name" type="text" placeholder="مثلاً: صفحة المتجر" />
+    </label>
+    <label class="field">
+      <span>معرّف الصفحة (Page ID)</span>
+      <input id="input-page-id" type="text" placeholder="1234567890" />
+    </label>
+    <label class="field">
+      <span>Page Access Token</span>
+      <input id="input-page-token" type="password" placeholder="EAAG..." />
+    </label>
+    <button id="save-page" class="primary-btn">إضافة</button>
+    <p class="hint">
+      التوكن لازم يكون Page Access Token طويل الأمد وفيه صلاحيات:
+      pages_manage_posts، pages_read_engagement، pages_manage_engagement، read_insights.
+    </p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
